@@ -8,4 +8,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CollectionConstants {
     public static final String PLACES = "places";
+    public static final String PERFORMANCE_NOTIFY = "performance";
 }
