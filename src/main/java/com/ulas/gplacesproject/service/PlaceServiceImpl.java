@@ -2,6 +2,7 @@ package com.ulas.gplacesproject.service;
 
 import com.google.gson.Gson;
 import com.mongodb.client.MongoDatabase;
+import com.ulas.gplacesproject.core.annotation.PerformanceTracker;
 import com.ulas.gplacesproject.interfaces.mapper.PlaceMapper;
 import com.ulas.gplacesproject.interfaces.repository.PlaceRepository;
 import com.ulas.gplacesproject.interfaces.service.PlaceService;
@@ -34,6 +35,7 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
+    @PerformanceTracker(time = 2000)
     public PlaceResponse getPlaces(GetPlacesRequest getPlacesRequest) {
         PlaceEntity placeEntity = placeRepository.findByLatLongRadius(getPlacesRequest, mongoDatabase);
 
