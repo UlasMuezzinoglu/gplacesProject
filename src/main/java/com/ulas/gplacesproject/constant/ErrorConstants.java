@@ -8,7 +8,8 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 
 @Getter
 public enum ErrorConstants {
-    INVALID_OPERATION(BAD_REQUEST, "0051"),
+    INVALID_OPERATION(BAD_REQUEST, "0002"),
+    NOT_FOUND(HttpStatus.NOT_FOUND,"0002")
     ;
 
 
