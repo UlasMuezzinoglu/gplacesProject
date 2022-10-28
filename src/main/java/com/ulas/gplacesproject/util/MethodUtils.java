@@ -1,6 +1,8 @@
 package com.ulas.gplacesproject.util;
 
 import com.ulas.gplacesproject.exception.CustomException;
+import com.ulas.gplacesproject.model.request.GetPlacesRequest;
+import com.ulas.gplacesproject.properties.ApiProperties;
 import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
@@ -32,6 +34,12 @@ public class MethodUtils {
             respond.put("code", "0500");
         }
         return respond;
+    }
+
+    public static String setUrl(ApiProperties apiProperties, GetPlacesRequest getPlacesRequest) {
+        return apiProperties.getPlaceApiUrl() + "location=" + getPlacesRequest.getLatitude() + ","
+                + getPlacesRequest.getLongitude() + "&" + "radius=" + getPlacesRequest.getRadius()
+                + "&key=" + apiProperties.getApiKey();
     }
 
 }

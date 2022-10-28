@@ -2,6 +2,7 @@ package com.ulas.gplacesproject.service;
 
 import com.google.gson.Gson;
 import com.mongodb.client.MongoDatabase;
+import com.ulas.gplacesproject.core.LoggingBean;
 import com.ulas.gplacesproject.core.annotation.PerformanceTracker;
 import com.ulas.gplacesproject.interfaces.mapper.PlaceMapper;
 import com.ulas.gplacesproject.interfaces.repository.PlaceRepository;
@@ -19,6 +20,8 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.springframework.stereotype.Service;
 
+import static com.ulas.gplacesproject.util.MethodUtils.setUrl;
+
 @Service
 @RequiredArgsConstructor
 public class PlaceServiceImpl implements PlaceService {
@@ -27,12 +30,9 @@ public class PlaceServiceImpl implements PlaceService {
     private final PlaceRepository placeRepository;
     private final MongoDatabase mongoDatabase;
     private final ApiProperties apiProperties;
+    private final LoggingBean logger;
 
-    private static String setUrl(ApiProperties apiProperties, GetPlacesRequest getPlacesRequest) {
-        return apiProperties.getPlaceApiUrl() + "location=" + getPlacesRequest.getLatitude() + ","
-                + getPlacesRequest.getLongitude() + "&" + "radius=" + getPlacesRequest.getRadius()
-                + "&key=" + apiProperties.getApiKey();
-    }
+
 
     @Override
     @PerformanceTracker(time = 2000)
@@ -45,7 +45,8 @@ public class PlaceServiceImpl implements PlaceService {
             placeEntity = preparePlaceEntity(json, getPlacesRequest);
             placeRepository.save(placeEntity);
         }
-
+        logger.service.info("user requested nearby search request with that parameters . longitude = {} latitude = {} radius = {}",
+                getPlacesRequest.getLongitude(), getPlacesRequest.getLatitude(), getPlacesRequest.getRadius());
         return placeMapper.toResponse(placeEntity);
     }
 
